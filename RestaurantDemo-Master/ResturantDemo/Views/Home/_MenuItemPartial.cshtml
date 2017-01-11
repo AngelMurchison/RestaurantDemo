@@ -1,0 +1,32 @@
+﻿@model ResturantDemo.Models.Category
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">@Model.Name</h3>
+        <button onclick="ShowCreateItemForm(@Model.Id)">Add a menu item to @Model.Name</button>
+    </div>
+    <div class="panel-body">
+        <div id="CreateItemForm"></div>
+        <div id="EditItemForm"></div>
+        <div id="DeleteItemForm"></div>
+        @foreach (var item in Model.Menu)
+        {
+            <div class="row">
+                <div class="col-xs-4">
+                    @item.Name
+                </div>
+                <div class="col-xs-4">
+                    @Html.DisplayFor(x => item.Price)
+                </div>
+                <div class="col-xs-2">
+                    <button onclick="ShowEditItemForm(@item.Id)">Edit @item.Name</button>
+                </div>
+                <div class="col-xs-2">
+                    <button onclick="ShowDeleteItemForm(@item.Id)">Delete @item.Name</button>
+                </div>
+                <div class="col-xs-10">
+                    @Html.DisplayFor(x => item.Description)
+                </div>
+            </div>
+        }
+    </div>
+</div>

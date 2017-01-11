@@ -1,0 +1,104 @@
+﻿@model IEnumerable<ResturantDemo.Models.Category>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Restaurant</h1>
+    <p class="lead">Hey hey!<marquee>Come and eat our food!</marquee></p>
+</div>
+
+@if (User.Identity.IsAuthenticated)
+{
+    <div>
+        <button onclick="ShowCreateForm()">Create Menu Section</button>
+        <div id="CreateForm"></div>
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-8">
+        @foreach (var category in Model)
+        {
+            // todo: make pretty.
+            <button onclick="ShowDeleteForm(@category.Id)">Delete Menu Section</button>
+            <button onclick="ShowEditForm(@category.Id)">Edit Menu Section</button>
+            <div id="DeleteForm-@category.Id"></div>
+            <div id="EditForm-@category.Id"></div>
+            @Html.Partial("_MenuItemPartial", category)
+        }
+    </div>
+    <div class="col-md-4">
+        Resturant side bar
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        var ShowCreateForm = function () {
+            $.ajax({
+                url: "/home/create",
+                method: "GET",
+                dataType:"html",
+                success: function (partial) {
+                    $("#CreateForm").html(partial);
+                }
+            })
+        }
+
+        var ShowDeleteForm = function (id) {
+            $.ajax({
+                url: "/home/delete/" + id,
+                method: "GET",
+                dataType: "html",
+                success: function (partial) {
+                    $("#DeleteForm-"+ id).html(partial)
+                }
+            })
+        }
+
+        var ShowEditForm = function (id) {
+            $.ajax({
+                url: "/home/edit/" + id,
+                method: "GET",
+                dataType: "html",
+                success: function (partial) {
+                    $("#EditForm-" + id).html(partial)
+                }
+            })
+        }
+        var ShowCreateItemForm = function (id) {
+            $.ajax({
+                url: "/menuitems/create/" + id,
+                method: "GET",
+                dataType: "html",
+                success: function (partial) {
+                    $("#CreateItemForm").html(partial);
+                }
+            })
+        }
+
+        var ShowEditItemForm = function (id) {
+            $.ajax({
+                url: "/menuitems/edit/" + id,
+                method: "GET",
+                dataType: "html",
+                success: function (partial) {
+                    $("#EditItemForm").html(partial);
+                }
+            })
+        }
+
+        var ShowDeleteItemForm = function (id) {
+            $.ajax({
+                url: "/menuitems/delete/" + id,
+                method: "GET",
+                dataType: "html",
+                success: function (partial) {
+                    $("#DeleteItemForm").html(partial);
+                }
+            })
+        }
+    </script>
+}
