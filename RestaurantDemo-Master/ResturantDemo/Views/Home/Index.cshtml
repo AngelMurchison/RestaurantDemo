@@ -9,23 +9,33 @@
     <p class="lead">Hey hey!<marquee>Come and eat our food!</marquee></p>
 </div>
 
-@if (User.Identity.IsAuthenticated)
+@if (User.IsInRole("owner"))
 {
     <div>
         <button onclick="ShowCreateForm()">Create Menu Section</button>
         <div id="CreateForm"></div>
     </div>
 }
+@if (User.IsInRole("customer"))
+{
+    <div id="OrderForm">
+        @Html.Partial("_ShoppingCart", new ResturantDemo.Models.Orders())
+    </div>
+}
+
 
 <div class="row">
     <div class="col-md-8">
         @foreach (var category in Model)
         {
             // todo: make pretty.
-            <button onclick="ShowDeleteForm(@category.Id)">Delete Menu Section</button>
-            <button onclick="ShowEditForm(@category.Id)">Edit Menu Section</button>
-            <div id="DeleteForm-@category.Id"></div>
-            <div id="EditForm-@category.Id"></div>
+            if (User.IsInRole("owner"))
+            {
+                <button onclick="ShowDeleteForm(@category.Id)">Delete Menu Section</button>
+                <button onclick="ShowEditForm(@category.Id)">Edit Menu Section</button>
+                <div id="DeleteForm-@category.Id"></div>
+                <div id="EditForm-@category.Id"></div>
+            }
             @Html.Partial("_MenuItemPartial", category)
         }
     </div>
@@ -46,7 +56,6 @@
                 }
             })
         }
-
         var ShowDeleteForm = function (id) {
             $.ajax({
                 url: "/home/delete/" + id,
@@ -57,7 +66,6 @@
                 }
             })
         }
-
         var ShowEditForm = function (id) {
             $.ajax({
                 url: "/home/edit/" + id,
@@ -78,7 +86,6 @@
                 }
             })
         }
-
         var ShowEditItemForm = function (id) {
             $.ajax({
                 url: "/menuitems/edit/" + id,
@@ -89,7 +96,6 @@
                 }
             })
         }
-
         var ShowDeleteItemForm = function (id) {
             $.ajax({
                 url: "/menuitems/delete/" + id,
@@ -100,5 +106,28 @@
                 }
             })
         }
+        var getCurrentOrder = function() {
+            $.ajax({
+                url: "/orders/ShoppingCart",
+                method: "GET",
+                dataType: "html",
+                success: function (partial) {
+                    $("#OrderForm").html(partial);
+                }
+            })
+        }
+        var AddToOrder = function (id) {
+            $.ajax({
+                url: "/orders/ShoppingCart/" + id,
+                method: "POST",
+                dataType: "html",
+                success: function (partial) {
+                    $("#OrderForm").html(partial);
+                }
+            });
+        }
+        $(document).ready(function () {
+            getCurrentOrder();
+        });
     </script>
 }

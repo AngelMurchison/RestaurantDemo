@@ -49,7 +49,7 @@ namespace ResturantDemo.Controllers
             return PartialView();
         }
 
-
+        [Authorize(Roles = "owner")]
         [HttpPost]
         public ActionResult Create(Category category)
         {
@@ -68,7 +68,7 @@ namespace ResturantDemo.Controllers
                 );
             return RedirectToAction("Index");
         }
-
+        [Authorize(Roles = "owner")]
         public ActionResult Edit(int id)
         {
             var category = db.Categories.FirstOrDefault(f => f.Id == id);
@@ -77,7 +77,6 @@ namespace ResturantDemo.Controllers
 
         [HttpPost]
         public ActionResult Edit(Category category)
-
         {
             HttpContext.Cache.Remove("menu");
             var toedit = db.Categories.FirstOrDefault(f => f.Id == category.Id);
@@ -96,14 +95,15 @@ namespace ResturantDemo.Controllers
             return RedirectToAction("Index");
         }
 
-    
 
-    public ActionResult Delete(int id)
+        [Authorize(Roles = "owner")]
+        public ActionResult Delete(int id)
         {
             var category = db.Categories.FirstOrDefault(f => f.Id == id);
             return PartialView("Delete", category);
         }
 
+        [Authorize(Roles = "owner")]
         [HttpPost]
         public ActionResult Delete(Category category)
         {

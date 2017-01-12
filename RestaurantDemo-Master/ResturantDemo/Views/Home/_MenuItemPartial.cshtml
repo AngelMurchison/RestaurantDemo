@@ -1,8 +1,11 @@
 ﻿@model ResturantDemo.Models.Category
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title">@Model.Name</h3>
-        <button onclick="ShowCreateItemForm(@Model.Id)">Add a menu item to @Model.Name</button>
+        <h2 class="panel-title">@Model.Name</h2>
+        @if (User.IsInRole("owner"))
+        {
+            <button onclick="ShowCreateItemForm(@Model.Id)">Add a menu item to @Model.Name</button>
+        }
     </div>
     <div class="panel-body">
         <div id="CreateItemForm"></div>
@@ -12,20 +15,27 @@
         {
             <div class="row">
                 <div class="col-xs-4">
-                    @item.Name
+                    <h4> @item.Name</h4>
                 </div>
                 <div class="col-xs-4">
                     @Html.DisplayFor(x => item.Price)
                 </div>
-                <div class="col-xs-2">
-                    <button onclick="ShowEditItemForm(@item.Id)">Edit @item.Name</button>
-                </div>
-                <div class="col-xs-2">
-                    <button onclick="ShowDeleteItemForm(@item.Id)">Delete @item.Name</button>
-                </div>
+                @if (User.IsInRole("owner"))
+                {
+                    <div class="col-xs-2">
+                        <button onclick="ShowEditItemForm(@item.Id)">Edit @item.Name</button>
+                    </div>
+                    <div class="col-xs-2">
+                        <button onclick="ShowDeleteItemForm(@item.Id)">Delete @item.Name</button>
+                    </div>
+                }
                 <div class="col-xs-10">
                     @Html.DisplayFor(x => item.Description)
                 </div>
+                @if (User.IsInRole("customer"))
+                {
+                    <button onclick="AddToOrder(@item.Id)">+</button>
+                }
             </div>
         }
     </div>

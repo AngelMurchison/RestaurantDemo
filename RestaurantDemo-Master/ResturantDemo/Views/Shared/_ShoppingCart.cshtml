@@ -1,0 +1,8 @@
+﻿@model ResturantDemo.Models.Orders
+@if (User.IsInRole("customer") && Model != null)
+{
+    <h4>There are @Model.Order.Count items in your cart.</h4>
+        <h4>@Model.TotalPrice</h4>
+        @Html.ActionLink("View Cart and Confirm", "ViewCart")
+
+}

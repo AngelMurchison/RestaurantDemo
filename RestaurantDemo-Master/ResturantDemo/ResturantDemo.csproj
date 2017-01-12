@@ -199,6 +199,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MenuItemsController.cs" />
+    <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -206,12 +207,17 @@
     <Compile Include="Migrations\201701101526301_First.Designer.cs">
       <DependentUpon>201701101526301_First.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701111850397_AddOrders.cs" />
+    <Compile Include="Migrations\201701111850397_AddOrders.Designer.cs">
+      <DependentUpon>201701111850397_AddOrders.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MenuItem.cs" />
+    <Compile Include="Models\Order.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -280,6 +286,10 @@
     <Content Include="Views\MenuItems\Create.cshtml" />
     <Content Include="Views\MenuItems\Edit.cshtml" />
     <Content Include="Views\MenuItems\Delete.cshtml" />
+    <Content Include="Views\Orders\Index.cshtml" />
+    <Content Include="Views\Shared\_ShoppingCart.cshtml" />
+    <Content Include="Views\Orders\PlaceOrder.cshtml" />
+    <Content Include="Views\Orders\ViewCart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -295,6 +305,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201701101526301_First.resx">
       <DependentUpon>201701101526301_First.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701111850397_AddOrders.resx">
+      <DependentUpon>201701111850397_AddOrders.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
